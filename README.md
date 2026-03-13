@@ -1,6 +1,16 @@
 # opn-claude
 
-> 오픈닥터 팀을 위한 Claude Code 커스텀 스킬 모음
+> 오픈닥터 팀을 위한 Claude Code 커스텀 스킬 & 예시 페이지 모음
+
+## 레포 구조
+
+```
+opn-claude/
+├── skills/          ← 스킬 (.md)
+├── examples/        ← 인터랙티브 예시 페이지 (.html)
+├── scripts/         ← 자동화 스크립트
+└── README.md
+```
 
 ## 스킬 목록
 
@@ -17,17 +27,80 @@
 
 ## 예시 페이지
 
+실무에서 적용한 기술을 인터랙티브하게 학습할 수 있는 단일 HTML 페이지 모음입니다.
+
 | 예시 | 파일 | 설명 |
 | ---- | ---- | ---- |
 | **NaverMap 성능 최적화 가이드** | `examples/navermap-optimization.html` | React + 네이버맵 SDK 동기화 최적화 실전 가이드 (인터랙티브 데모 포함) |
 
+> 예시 페이지는 외부 의존성 없이 단일 HTML 파일로 구성되어 있어, 다운로드 후 바로 브라우저에서 열 수 있습니다.
+
+---
+
 ## 사용 방법
 
-이 레포의 `skills/` 디렉터리에 있는 `.md` 파일들을 Claude Code의 로컬 스킬로 등록하면, 트리거 키워드 입력 시 자동으로 해당 스킬이 활성화됩니다.
+### 1단계: 이 레포를 클론합니다
 
-## 스킬 추가 방법
+```bash
+gh repo clone opngroup/opn-claude ~/opn-claude
+```
 
-1. `#공부방_ai` 슬랙 채널에 `.md` 스킬 파일을 업로드하면 자동으로 PR이 생성됩니다.
-2. 팀원 리뷰 후 머지하면 README가 자동 갱신됩니다.
+### 2단계: 원하는 스킬을 프로젝트에 등록합니다
 
-수동으로 추가하려면 `skills/` 디렉터리에 `.md` 파일을 추가하고 PR을 올려주세요.
+```bash
+# 방법 A: 심볼릭 링크 (추천 - 업데이트 자동 반영)
+ln -s ~/opn-claude/skills/code-review.md /your-project/.claude/skills/code-review.md
+
+# 방법 B: 직접 복사
+cp ~/opn-claude/skills/code-review.md /your-project/.claude/skills/code-review.md
+```
+
+### 3단계: Claude Code에서 트리거 키워드를 말합니다
+
+```
+# 예시: 코드 리뷰 스킬
+> 코드 리뷰 해줘
+
+# 예시: PR 작성 스킬
+> PR 작성해줘
+
+# 예시: 앰플리튜드 네이밍
+> 앰플리튜드 이벤트 네이밍 만들어줘
+```
+
+### 예시 페이지 보는 법
+
+```bash
+# 브라우저에서 바로 열기
+open ~/opn-claude/examples/navermap-optimization.html
+```
+
+---
+
+## 기여 방법
+
+### 스킬 추가하기
+
+1. **자동**: `#공부방_ai` 슬랙 채널에 `.md` 스킬 파일을 업로드하면 자동으로 PR이 생성됩니다.
+2. **수동**: `skills/` 디렉터리에 `.md` 파일을 추가하고 PR을 올려주세요.
+3. **Claude Code 활용**: 작업 중 유용한 스킬을 만들었다면 Claude에게 "이 스킬 opn-claude에 올려줘"라고 말하면 자동으로 PR을 만들어줍니다.
+
+### 예시 페이지 추가하기
+
+Claude Code에게 아래처럼 말하면 됩니다:
+
+```
+# 예시 1: 작업 중 배운 내용을 예시 페이지로 만들어서 올리기
+> React Query 캐싱 전략 예시 페이지 만들어서 opn-claude에 올려줘
+
+# 예시 2: 이미 만든 HTML 파일을 올리기
+> 이 가이드 페이지 opn-claude examples에 푸시해줘
+```
+
+자동으로 `examples/` 디렉터리에 추가하고, 이 README 테이블에 등록한 뒤, PR을 생성합니다.
+
+### 기여 규칙
+
+- **스킬**: `skills/` 디렉터리에 `.md` 파일로 추가
+- **예시 페이지**: `examples/` 디렉터리에 단일 `.html` 파일로 추가 (외부 의존성 X)
+- PR 리뷰 후 머지하면 README가 자동 갱신됩니다
