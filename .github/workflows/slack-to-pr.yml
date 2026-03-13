@@ -1,0 +1,64 @@
+name: Create skill PR from Slack (via Zapier webhook)
+
+on:
+  repository_dispatch:
+    types: [new-skill]
+
+# Zapier에서 이 워크플로우를 트리거할 때 보내는 payload 형식:
+# {
+#   "event_type": "new-skill",
+#   "client_payload": {
+#     "filename": "my-skill.md",
+#     "content": "--- \nname: my-skill\n...",
+#     "author": "juyoung"
+#   }
+# }
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create skill file
+        run: |
+          FILENAME="${{ github.event.client_payload.filename }}"
+          # .md 확장자 보장
+          if [[ "$FILENAME" != *.md ]]; then
+            FILENAME="${FILENAME}.md"
+          fi
+          echo '${{ github.event.client_payload.content }}' > "$FILENAME"
+          echo "SKILL_FILE=$FILENAME" >> $GITHUB_ENV
+
+      - name: Create branch and PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="skill/$(echo "$SKILL_FILE" | sed 's/.md$//' | tr ' ' '-')"
+          AUTHOR="${{ github.event.client_payload.author }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add "$SKILL_FILE"
+          git commit -m "feat: add skill $SKILL_FILE (from Slack by $AUTHOR)"
+          git push -u origin "$BRANCH"
+
+          gh pr create \
+            --title "New Skill: $SKILL_FILE" \
+            --body "$(cat <<EOF
+          ## 새 스킬 추가
+
+          - **파일**: \`$SKILL_FILE\`
+          - **등록자**: $AUTHOR
+          - **경로**: 슬랙 #ai-skills → Zapier → GitHub
+
+          > 슬랙 #공부방_ai 채널에서 업로드됨. 머지하면 README가 자동으로 갱신됩니다.
+          EOF
+          )" \
+            --base main
