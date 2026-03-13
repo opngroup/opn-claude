@@ -14,6 +14,12 @@
 | **토스 프론트엔드 클린 코드 스킬** | `toss-clean-code.md` | - | - |
 | **write-pr** | `write-pr.md` | 프로젝트 PR 템플릿에 맞춰 PR 설명을 자동 작성 | `pr 작성`, `pr 작성해줘`, `write pr` |
 
+## 예시 페이지
+
+| 예시 | 파일 | 설명 |
+| ---- | ---- | ---- |
+| **NaverMap 성능 최적화 가이드** | `examples/navermap-optimization.html` | React + 네이버맵 SDK 동기화 최적화 실전 가이드 (인터랙티브 데모 포함) |
+
 ## 사용 방법
 
 이 레포의 `.md` 파일들을 Claude Code의 로컬 스킬로 등록하면, 트리거 키워드 입력 시 자동으로 해당 스킬이 활성화됩니다.
