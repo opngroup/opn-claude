@@ -32,7 +32,7 @@ opn-claude/
 | 예시 | 파일 | 설명 |
 | ---- | ---- | ---- |
 | **NaverMap 성능 최적화 가이드** | `examples/navermap-optimization.html` | React + 네이버맵 SDK 동기화 최적화 실전 가이드 (인터랙티브 데모 포함) |
-
+| **Flutter → Next.js 마이그레이션 히스토리** | `examples/migration-history.html` | Flutter Web에서 Next.js로의 점진적 마이그레이션 성과 비교 대시보드 (개발 속도, 코드량, 기술 스택 비교) |
 > 예시 페이지는 외부 의존성 없이 단일 HTML 파일로 구성되어 있어, 다운로드 후 바로 브라우저에서 열 수 있습니다.
 
 ---
