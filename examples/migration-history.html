@@ -1,47 +1,58 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" style="scroll-behavior: smooth;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OpenDoctor Migration History</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <style>
+    :root {
+      --primary-dark: #0d2e6e;
+      --primary-mid: #536db1;
+      --primary-focus: #9bade3;
+      --primary-dim: #e3eaf7;
+      --primary-white: #f4f6ff;
+      --highlight: #ea2f61;
+      --highlight-focus: #ff5959;
+      --highlight-mid: #ff9059;
+      --highlight-low: #ffb459;
+      --tertiary-dark: #1d9380;
+      --tertiary-mid: #65dbc7;
+      --neutral-150: #808080;
+      --neutral-200: #a8a8a8;
+      --neutral-300: #d9d9d9;
+      --neutral-400: #f6f6f6;
+      --neutral-white: #ffffff;
+      --text-body: #3d424d;
+      --text-sub: #808080;
+      --border: #e3eaf7;
+      --shadow-sm: 0 1px 3px rgba(13, 46, 110, 0.06);
+      --shadow-md: 0 4px 12px rgba(13, 46, 110, 0.10);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0f;
-      color: #e0e0e0;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: #f8f9fc;
+      color: var(--text-body);
       line-height: 1.6;
     }
 
+    /* === Hero === */
     .hero {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      background: linear-gradient(150deg, var(--primary-white) 0%, #eef2fb 50%, #ffffff 100%);
       padding: 80px 40px;
       text-align: center;
       position: relative;
       overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
-      animation: pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.1); opacity: 1; }
+      border-bottom: 1px solid var(--border);
     }
 
     .hero h1 {
       font-size: 3rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       position: relative;
@@ -50,7 +61,7 @@
 
     .hero .subtitle {
       font-size: 1.2rem;
-      color: #8892b0;
+      color: var(--primary-mid);
       margin-top: 12px;
       position: relative;
       z-index: 1;
@@ -62,11 +73,11 @@
       align-items: center;
       margin-top: 24px;
       padding: 12px 24px;
-      background: rgba(255,255,255,0.05);
+      background: var(--neutral-white);
       border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid var(--border);
       font-size: 0.95rem;
-      color: #a0aec0;
+      color: var(--primary-mid);
       position: relative;
       z-index: 1;
     }
@@ -81,7 +92,7 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 32px;
-      color: #f0f0f0;
+      color: var(--primary-dark);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -91,10 +102,100 @@
       font-size: 1.4rem;
     }
 
+    /* === ToC === */
+    .toc-section {
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toc-heading {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+    }
+
+    .toc-conclusion {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--text-body);
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .toc-item {
+      padding: 20px;
+      border-radius: 14px;
+      background: var(--primary-white);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: block;
+    }
+
+    .toc-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .toc-item-num {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--primary-mid);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .toc-item-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .toc-item-subs {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .toc-item-subs li {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .toc-item-subs li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--primary-focus);
+    }
+
     /* === WHY Section === */
     .why-section {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.02));
-      border: 1px solid rgba(239, 68, 68, 0.15);
+      background: linear-gradient(135deg, rgba(234, 47, 97, 0.04), rgba(234, 47, 97, 0.01));
+      border: 1px solid rgba(234, 47, 97, 0.15);
       border-radius: 20px;
       padding: 40px;
       margin-bottom: 48px;
@@ -108,16 +209,176 @@
     }
 
     .pain-card {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(239, 68, 68, 0.2);
+      background: var(--neutral-white);
+      border: 1px solid rgba(234, 47, 97, 0.15);
       border-radius: 16px;
       padding: 24px;
       text-align: center;
+      box-shadow: var(--shadow-sm);
     }
 
     .pain-card .emoji { font-size: 2rem; margin-bottom: 8px; }
-    .pain-card h4 { color: #ef4444; font-size: 1rem; margin-bottom: 6px; }
-    .pain-card p { color: #9ca3af; font-size: 0.85rem; }
+    .pain-card h4 { color: var(--highlight); font-size: 1rem; margin-bottom: 6px; }
+    .pain-card p { color: var(--text-sub); font-size: 0.85rem; }
+
+    /* === Business Impact Cards === */
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    .biz-card {
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .biz-card .biz-label { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .biz-card .biz-value { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+    .biz-card .biz-desc { font-size: 0.78rem; color: var(--text-sub); }
+
+    /* === Competitor Bench === */
+    .bench-section {
+      background: var(--primary-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .bench-tag {
+      display: inline-block;
+      background: var(--primary-dim);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 6px;
+    }
+
+    /* === Lighthouse Scores === */
+    .lh-section {
+      margin-bottom: 48px;
+    }
+
+    .lh-scores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .lh-score-card {
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lh-score-num {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .lh-score-num.red { color: var(--highlight); }
+    .lh-score-num.orange { color: var(--highlight-mid); }
+    .lh-score-num.green { color: var(--tertiary-dark); }
+
+    .lh-score-label {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .lh-score-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--primary-dim);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .lh-score-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .lh-score-fill.red { background: var(--highlight); }
+    .lh-score-fill.orange { background: var(--highlight-mid); }
+    .lh-score-fill.green { background: var(--tertiary-dark); }
+
+    /* === Resource Chart === */
+    .resource-chart {
+      margin-top: 24px;
+    }
+
+    .resource-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .resource-bar-label {
+      width: 120px;
+      font-size: 0.82rem;
+      color: var(--text-body);
+      text-align: right;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    .resource-bar-track {
+      flex: 1;
+      height: 24px;
+      background: var(--neutral-400);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .resource-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--neutral-white);
+      width: 0;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .resource-bar-fill.font { background: linear-gradient(90deg, var(--highlight), var(--highlight-focus)); }
+    .resource-bar-fill.dart { background: linear-gradient(90deg, var(--primary-dark), var(--primary-mid)); }
+    .resource-bar-fill.api { background: linear-gradient(90deg, var(--highlight-mid), var(--highlight-low)); }
+    .resource-bar-fill.turf { background: linear-gradient(90deg, var(--tertiary-dark), var(--tertiary-mid)); }
+    .resource-bar-fill.etc { background: var(--primary-mid); }
+    .resource-bar-fill.rest { background: var(--neutral-300); }
+
+    .resource-bar-value {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      width: 60px;
+      flex-shrink: 0;
+    }
 
     /* === Stats Cards === */
     .stats-grid {
@@ -128,23 +389,24 @@
     }
 
     .stat-card {
-      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
       border-radius: 20px;
       padding: 32px;
       position: relative;
       overflow: hidden;
       transition: transform 0.2s, border-color 0.2s;
+      box-shadow: var(--shadow-sm);
     }
 
     .stat-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(99, 102, 241, 0.3);
+      border-color: var(--primary-focus);
     }
 
     .stat-card .label {
       font-size: 0.85rem;
-      color: #8892b0;
+      color: var(--text-sub);
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 8px;
@@ -158,13 +420,13 @@
 
     .stat-card .detail {
       font-size: 0.9rem;
-      color: #6b7280;
+      color: var(--text-sub);
     }
 
-    .flutter-color { color: #54c5f8; }
-    .next-color { color: #818cf8; }
-    .better-color { color: #34d399; }
-    .warn-color { color: #fbbf24; }
+    .flutter-color { color: var(--primary-mid); }
+    .next-color { color: var(--tertiary-dark); }
+    .better-color { color: var(--tertiary-dark); }
+    .warn-color { color: var(--highlight-low); }
 
     /* === Comparison Table === */
     .comparison-section {
@@ -175,18 +437,18 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      background: rgba(255,255,255,0.02);
+      background: var(--neutral-white);
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
     }
 
     .comparison-table thead th {
-      background: rgba(255,255,255,0.05);
+      background: var(--primary-white);
       padding: 16px 20px;
       text-align: left;
       font-weight: 600;
-      color: #c0c0c0;
+      color: var(--primary-dark);
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -194,12 +456,13 @@
 
     .comparison-table tbody td {
       padding: 14px 20px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid var(--border);
       font-size: 0.95rem;
+      color: var(--text-body);
     }
 
     .comparison-table tbody tr:hover {
-      background: rgba(255,255,255,0.03);
+      background: var(--primary-dim);
     }
 
     .badge {
@@ -212,21 +475,41 @@
     }
 
     .badge-better {
-      background: rgba(52, 211, 153, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(52, 211, 153, 0.3);
+      background: rgba(29, 147, 128, 0.10);
+      color: var(--tertiary-dark);
+      border: 1px solid rgba(29, 147, 128, 0.25);
     }
 
     .badge-same {
-      background: rgba(251, 191, 36, 0.15);
-      color: #fbbf24;
-      border: 1px solid rgba(251, 191, 36, 0.3);
+      background: rgba(255, 144, 89, 0.10);
+      color: var(--highlight-mid);
+      border: 1px solid rgba(255, 144, 89, 0.25);
     }
 
     .badge-worse {
-      background: rgba(239, 68, 68, 0.15);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: rgba(234, 47, 97, 0.10);
+      color: var(--highlight);
+      border: 1px solid rgba(234, 47, 97, 0.25);
+    }
+
+    /* === Big Section Header === */
+    .big-section-header {
+      text-align: center;
+      padding: 48px 20px 32px;
+      margin-bottom: 16px;
+    }
+
+    .big-section-header .section-title {
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .big-section-header p {
+      font-size: 1rem;
+      color: var(--text-sub);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     /* === Timeline === */
@@ -243,16 +526,17 @@
       top: 0;
       bottom: 0;
       width: 2px;
-      background: linear-gradient(180deg, #818cf8, #34d399);
+      background: linear-gradient(180deg, var(--primary-mid), var(--tertiary-dark));
     }
 
     .timeline-item {
       position: relative;
       margin-bottom: 32px;
       padding: 24px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
       border-radius: 16px;
+      box-shadow: var(--shadow-sm);
     }
 
     .timeline-item::before {
@@ -263,13 +547,13 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #818cf8;
-      border: 3px solid #0a0a0f;
+      background: var(--primary-mid);
+      border: 3px solid #f8f9fc;
     }
 
     .timeline-date {
       font-size: 0.8rem;
-      color: #818cf8;
+      color: var(--primary-mid);
       font-weight: 600;
       margin-bottom: 6px;
     }
@@ -277,14 +561,151 @@
     .timeline-title {
       font-size: 1.1rem;
       font-weight: 700;
-      color: #f0f0f0;
+      color: var(--primary-dark);
       margin-bottom: 6px;
     }
 
     .timeline-desc {
       font-size: 0.9rem;
-      color: #8892b0;
+      color: var(--text-sub);
     }
+
+    /* === AI Journey === */
+    .ai-journey-section {
+      margin-bottom: 48px;
+    }
+
+    .ai-intro {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .ai-subtitle {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+      margin-top: 32px;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .insight-card {
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .insight-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .insight-card p {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    .ai-timeline {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 32px;
+    }
+
+    .ai-timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary-mid), var(--tertiary-dark));
+    }
+
+    .ai-timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ai-timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -33px;
+      top: 24px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary-mid);
+      border: 3px solid #f8f9fc;
+    }
+
+    .ai-timeline-date {
+      font-size: 0.75rem;
+      color: var(--primary-mid);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .ai-timeline-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .ai-timeline-desc {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    .ai-summary-callout {
+      background: linear-gradient(135deg, var(--primary-dim), rgba(29, 147, 128, 0.04));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+
+    .ai-summary-callout h4 {
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+      margin-bottom: 14px;
+    }
+
+    .ai-summary-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ai-summary-list li {
+      font-size: 0.88rem;
+      color: var(--text-body);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .ai-summary-list li .check { color: var(--tertiary-dark); flex-shrink: 0; }
+    .ai-summary-list li .partial { color: var(--highlight-low); flex-shrink: 0; }
 
     /* === Chart === */
     .chart-section {
@@ -306,7 +727,7 @@
     .bar-label {
       width: 70px;
       font-size: 0.8rem;
-      color: #8892b0;
+      color: var(--text-sub);
       text-align: right;
       flex-shrink: 0;
     }
@@ -314,7 +735,7 @@
     .bar-track {
       flex: 1;
       height: 28px;
-      background: rgba(255,255,255,0.03);
+      background: var(--neutral-400);
       border-radius: 6px;
       overflow: hidden;
       position: relative;
@@ -322,7 +743,7 @@
 
     .bar-fill-flutter {
       height: 100%;
-      background: linear-gradient(90deg, #0553B1, #54c5f8);
+      background: linear-gradient(90deg, #0d2e6e, #536db1);
       border-radius: 6px;
       display: flex;
       align-items: center;
@@ -335,7 +756,7 @@
 
     .bar-fill-next {
       height: 100%;
-      background: linear-gradient(90deg, #4f46e5, #818cf8);
+      background: linear-gradient(90deg, #1d9380, #65dbc7);
       border-radius: 6px;
       display: flex;
       align-items: center;
@@ -358,7 +779,7 @@
       align-items: center;
       gap: 8px;
       font-size: 0.85rem;
-      color: #8892b0;
+      color: var(--text-sub);
     }
 
     .legend-dot {
@@ -367,8 +788,8 @@
       border-radius: 4px;
     }
 
-    .legend-flutter { background: linear-gradient(135deg, #0553B1, #54c5f8); }
-    .legend-next { background: linear-gradient(135deg, #4f46e5, #818cf8); }
+    .legend-flutter { background: linear-gradient(135deg, #0d2e6e, #536db1); }
+    .legend-next { background: linear-gradient(135deg, #1d9380, #65dbc7); }
 
     /* === Velocity Section === */
     .velocity-grid {
@@ -379,16 +800,18 @@
     }
 
     .velocity-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--neutral-white);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 28px;
+      box-shadow: var(--shadow-sm);
     }
 
     .velocity-card h4 {
       font-size: 1rem;
-      color: #c0c0c0;
+      color: var(--primary-dark);
       margin-bottom: 16px;
+      font-weight: 700;
     }
 
     .velocity-stat {
@@ -396,65 +819,73 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid var(--border);
     }
 
     .velocity-stat:last-child { border-bottom: none; }
 
-    .velocity-label { color: #8892b0; font-size: 0.9rem; }
+    .velocity-label { color: var(--text-sub); font-size: 0.9rem; }
     .velocity-value { font-weight: 700; font-size: 1.1rem; }
 
-    /* === Domain Progress === */
-    .domain-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+    /* === Completion Roadmap === */
+    .completion-section {
       margin-bottom: 48px;
     }
 
-    .domain-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.2s;
+    .exit-criteria {
+      background: linear-gradient(135deg, var(--primary-dim), rgba(29, 147, 128, 0.04));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 32px;
     }
 
-    .domain-card:hover { transform: translateY(-2px); }
-    .domain-card .name { font-weight: 700; margin-bottom: 4px; color: #e0e0e0; }
-    .domain-card .files { font-size: 0.85rem; color: #818cf8; }
-    .domain-card .status {
-      margin-top: 8px;
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 100px;
-      display: inline-block;
+    .exit-criteria h4 {
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+      margin-bottom: 14px;
+      font-weight: 700;
     }
 
-    .status-done {
-      background: rgba(52, 211, 153, 0.15);
-      color: #34d399;
+    .exit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .status-wip {
-      background: rgba(251, 191, 36, 0.15);
-      color: #fbbf24;
+    .exit-list li {
+      font-size: 0.9rem;
+      color: var(--text-body);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .exit-list li .done { color: var(--tertiary-dark); flex-shrink: 0; }
+    .exit-list li .pending { color: var(--text-sub); flex-shrink: 0; }
+
+    .placeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
     }
 
     /* === Footer === */
     .footer {
       text-align: center;
       padding: 40px;
-      color: #4b5563;
+      color: var(--text-sub);
       font-size: 0.85rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid var(--border);
+      background: var(--neutral-white);
     }
 
     /* === Summary Callout === */
     .summary-callout {
-      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1), rgba(52, 211, 153, 0.05));
-      border: 1px solid rgba(129, 140, 248, 0.2);
+      background: linear-gradient(135deg, var(--primary-dim), rgba(29, 147, 128, 0.04));
+      border: 1px solid var(--border);
       border-radius: 20px;
       padding: 40px;
       margin-bottom: 48px;
@@ -462,7 +893,7 @@
 
     .summary-callout h3 {
       font-size: 1.4rem;
-      color: #818cf8;
+      color: var(--primary-mid);
       margin-bottom: 16px;
     }
 
@@ -477,12 +908,12 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      color: #c0c0c0;
+      color: var(--text-body);
       font-size: 0.95rem;
     }
 
-    .summary-list li .check { color: #34d399; flex-shrink: 0; }
-    .summary-list li .neutral { color: #fbbf24; flex-shrink: 0; }
+    .summary-list li .check { color: var(--tertiary-dark); flex-shrink: 0; }
+    .summary-list li .neutral { color: var(--highlight-low); flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -493,15 +924,62 @@
     <p class="subtitle">OpenDoctor 점진적 마이그레이션 히스토리 &amp; 성과 비교</p>
     <div class="period">
       <span>Flutter Legacy: 2023.10 ~ 현재 (29개월)</span>
-      <span style="color:#4b5563">|</span>
+      <span style="color: var(--neutral-300);">|</span>
       <span>Next.js: 2025.10 ~ 현재 (5개월)</span>
     </div>
   </section>
 
   <div class="container">
 
+    <!-- ToC -->
+    <nav class="toc-section" aria-label="목차">
+      <div class="toc-heading">이 문서의 구조</div>
+      <div class="toc-conclusion">
+        Flutter Web &rarr; Next.js 마이그레이션은 <strong style="color: var(--primary-mid);">기술적으로 필수</strong>였고, <strong style="color: var(--tertiary-dark);">5개월 만에 성공적으로 실행</strong>했다
+      </div>
+      <div class="toc-grid">
+        <a class="toc-item" href="#section-why">
+          <div class="toc-item-num">Part 1</div>
+          <div class="toc-item-title">WHY &mdash; 왜 전환이 필수였나?</div>
+          <ul class="toc-item-subs">
+            <li>SEO 불가</li>
+            <li>유입 채널 좁음</li>
+            <li>웹 생태계 단절</li>
+          </ul>
+        </a>
+        <a class="toc-item" href="#section-evidence">
+          <div class="toc-item-num">Part 2</div>
+          <div class="toc-item-title">EVIDENCE &mdash; 얼마나 심각했나?</div>
+          <ul class="toc-item-subs">
+            <li>Lighthouse 점수</li>
+            <li>Core Web Vitals</li>
+            <li>리소스 병목</li>
+          </ul>
+        </a>
+        <a class="toc-item" href="#section-how">
+          <div class="toc-item-num">Part 3</div>
+          <div class="toc-item-title">HOW &mdash; 어떻게 실행했나?</div>
+          <ul class="toc-item-subs">
+            <li>마이그레이션 타임라인 6단계</li>
+            <li>AI 활용 여정</li>
+            <li>기술 스택 비교</li>
+          </ul>
+        </a>
+        <a class="toc-item" href="#section-result">
+          <div class="toc-item-num">Part 4</div>
+          <div class="toc-item-title">RESULT &mdash; 결과는 어떤가?</div>
+          <ul class="toc-item-subs">
+            <li>핵심 수치 비교</li>
+            <li>개발 속도 분석</li>
+            <li>마이그레이션 완주 로드맵</li>
+            <li>성과 요약</li>
+          </ul>
+        </a>
+      </div>
+    </nav>
+
     <!-- WHY: 마이그레이션 배경 -->
-    <section class="why-section">
+    <section id="section-why" class="why-section">
       <h2 class="section-title"><span class="icon">🔥</span> 왜 마이그레이션했나?</h2>
       <div class="pain-points">
         <div class="pain-card">
@@ -525,7 +1003,390 @@
           <p>npm 패키지 사용 불가, 웹 표준 API 직접 접근 어려움</p>
         </div>
       </div>
+
+      <!-- Business Impact -->
+      <div class="biz-grid">
+        <div class="biz-card" style="border-left: 3px solid var(--highlight);">
+          <div class="biz-label">CAC (고객 획득 비용)</div>
+          <div class="biz-value" style="color: var(--highlight);">SEO 0점</div>
+          <div class="biz-desc">오가닉 유입 불가, 유료 광고에만 의존</div>
+        </div>
+        <div class="biz-card" style="border-left: 3px solid var(--highlight-mid);">
+          <div class="biz-label">LTV (고객 생애 가치)</div>
+          <div class="biz-value" style="color: var(--highlight-mid);">측정 불가</div>
+          <div class="biz-desc">분석 도구 통합 어려움으로 추적 한계</div>
+        </div>
+        <div class="biz-card" style="border-left: 3px solid var(--primary-mid);">
+          <div class="biz-label">체류 시간</div>
+          <div class="biz-value" style="color: var(--primary-mid);">로딩 지연</div>
+          <div class="biz-desc">초기 로딩 느려 이탈률 높음</div>
+        </div>
+      </div>
+
+      <!-- Competitor Bench -->
+      <div class="bench-section">
+        <h4 style="color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 12px; font-weight: 700;">경쟁사 기술 스택 벤치마크</h4>
+        <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">의료 부동산 / 헬스케어 B2B 경쟁사 대부분 React 또는 Next.js 기반</p>
+        <div>
+          <span class="bench-tag">똑닥 — React</span>
+          <span class="bench-tag">케어랩스 — React</span>
+          <span class="bench-tag">메디히어 — Next.js</span>
+          <span class="bench-tag">직방 — Next.js</span>
+          <span class="bench-tag">다방 — React</span>
+        </div>
+      </div>
     </section>
+
+    <!-- EVIDENCE: Lighthouse -->
+    <section id="section-evidence" class="lh-section">
+      <h2 class="section-title"><span class="icon">🔬</span> Flutter Web Lighthouse 진단 (Before)</h2>
+      <p style="color: var(--text-sub); margin-bottom: 24px; font-size: 0.9rem;">Flutter Web Legacy의 Lighthouse 점수 — 마이그레이션 전 상태</p>
+
+      <div class="lh-scores" id="lh-scores">
+        <div class="lh-score-card">
+          <div class="lh-score-num red">38</div>
+          <div class="lh-score-label">Performance</div>
+          <div class="lh-score-bar"><div class="lh-score-fill red" data-width="38"></div></div>
+        </div>
+        <div class="lh-score-card">
+          <div class="lh-score-num green">100</div>
+          <div class="lh-score-label">SEO</div>
+          <div class="lh-score-bar"><div class="lh-score-fill green" data-width="100"></div></div>
+        </div>
+        <div class="lh-score-card">
+          <div class="lh-score-num orange">83</div>
+          <div class="lh-score-label">Accessibility</div>
+          <div class="lh-score-bar"><div class="lh-score-fill orange" data-width="83"></div></div>
+        </div>
+        <div class="lh-score-card">
+          <div class="lh-score-num orange">81</div>
+          <div class="lh-score-label">Best Practices</div>
+          <div class="lh-score-bar"><div class="lh-score-fill orange" data-width="81"></div></div>
+        </div>
+      </div>
+
+      <!-- Core Web Vitals -->
+      <div style="background: var(--neutral-white); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow-sm);">
+        <h4 style="color: var(--primary-dark); font-size: 1rem; margin-bottom: 16px; font-weight: 700;">Core Web Vitals 상세</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: var(--highlight);">4.2s</div>
+            <div style="font-size: 0.82rem; color: var(--text-sub);">LCP (Largest Contentful Paint)</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: var(--highlight-mid);">320ms</div>
+            <div style="font-size: 0.82rem; color: var(--text-sub);">FID (First Input Delay)</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: var(--highlight);">0.42</div>
+            <div style="font-size: 0.82rem; color: var(--text-sub);">CLS (Cumulative Layout Shift)</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: var(--highlight);">6.1s</div>
+            <div style="font-size: 0.82rem; color: var(--text-sub);">TTI (Time to Interactive)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource Breakdown -->
+      <div style="background: var(--neutral-white); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: var(--shadow-sm);">
+        <h4 style="color: var(--primary-dark); font-size: 1rem; margin-bottom: 16px; font-weight: 700;">리소스 다운로드 병목 (총 11.1 MB)</h4>
+        <div class="resource-chart">
+          <div class="resource-bar-row">
+            <div class="resource-bar-label">웹 폰트</div>
+            <div class="resource-bar-track"><div class="resource-bar-fill font" id="res-font">33.5%</div></div>
+            <div class="resource-bar-value">3.72 MB</div>
+          </div>
+          <div class="resource-bar-row">
+            <div class="resource-bar-label">Dart→JS 번들</div>
+            <div class="resource-bar-track"><div class="resource-bar-fill dart" id="res-dart">16.3%</div></div>
+            <div class="resource-bar-value">1.81 MB</div>
+          </div>
+          <div class="resource-bar-row">
+            <div class="resource-bar-label">API 응답</div>
+            <div class="resource-bar-track"><div class="resource-bar-fill api" id="res-api">5.8%</div></div>
+            <div class="resource-bar-value">0.64 MB</div>
+          </div>
+          <div class="resource-bar-row">
+            <div class="resource-bar-label">Turf.js</div>
+            <div class="resource-bar-track"><div class="resource-bar-fill turf" id="res-turf">1.7%</div></div>
+            <div class="resource-bar-value">0.19 MB</div>
+          </div>
+          <div class="resource-bar-row">
+            <div class="resource-bar-label">CanvasKit 등</div>
+            <div class="resource-bar-track"><div class="resource-bar-fill etc" id="res-etc">1.3%</div></div>
+            <div class="resource-bar-value">0.14 MB</div>
+          </div>
+          <div class="resource-bar-row">
+            <div class="resource-bar-label">기타 리소스</div>
+            <div class="resource-bar-track"><div class="resource-bar-fill rest" id="res-rest" style="color: var(--text-sub);">52.5%</div></div>
+            <div class="resource-bar-value">5.83 MB</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW Big Section Header -->
+    <div id="section-how" class="big-section-header">
+      <h2 class="section-title"><span class="icon">🛠️</span> 어떻게 실행했나?</h2>
+      <p>6단계 점진적 마이그레이션, AI 체계적 활용, 13개 기술 스택 전환</p>
+    </div>
+
+    <!-- 마이그레이션 타임라인 -->
+    <h2 class="section-title" id="section-timeline"><span class="icon">🛤️</span> 마이그레이션 타임라인</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2025.10</div>
+        <div class="timeline-title">Phase 1 — 프로젝트 기반 구축</div>
+        <div class="timeline-desc">
+          Next.js 15 + Tailwind 4 초기 세팅 / iframe 통신 구조 확립 / Flutter Web을 iframe으로 임베드<br>
+          SEO 기반 작업 (메타데이터, OG Image)
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025.11</div>
+        <div class="timeline-title">Phase 2 — 핵심 도메인 마이그레이션 (폭발적 성장)</div>
+        <div class="timeline-desc">
+          74 커밋 (최대 활동) / 의원 검색·목록 / 모달 시스템 (Radix) / 디자인 시스템 구축<br>
+          의원 상세 페이지 / 결제 플로우 / iframe 양방향 통신 안정화
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025.12</div>
+        <div class="timeline-title">Phase 3 — 매물·리포트 마이그레이션</div>
+        <div class="timeline-desc">
+          매물 상세 사이드뷰 / 매물 QA 완료 / 리포트 목록·상세·결제 / 로그인 리다이렉트
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026.01</div>
+        <div class="timeline-title">Phase 4 — 인증·분석 강화</div>
+        <div class="timeline-desc">
+          입지 상담 Form 마이그레이션 / Amplitude 이벤트 추적 / 회원가입 Flutter→Next 위임<br>
+          리포트 상세 결제·라우팅 통합
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026.02</div>
+        <div class="timeline-title">Phase 5 — 고급 분석 기능</div>
+        <div class="timeline-desc">
+          반경분석·다각형분석 핵심 기능 / 비회원 접근 제어 UI / 인증 토큰 인메모리 전환
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026.03 (현재)</div>
+        <div class="timeline-title">Phase 6 — 입지분석 + 인프라 완성</div>
+        <div class="timeline-desc">
+          입지분석 전체 구현 (차트, 의원목록, 비회원 UI) / Sentry 에러 모니터링 시스템<br>
+          FSD 아키텍처 위반 전면 수정 (50건 → 0건) / iframe 통신 추상화 / 마이페이지<br>
+          빌딩 마커 polygon / NaverMap 성능 최적화 / 에러 클래스 세분화
+        </div>
+      </div>
+    </div>
+
+    <!-- AI 활용 여정 -->
+    <section id="section-ai-journey" class="ai-journey-section">
+      <h2 class="section-title"><span class="icon">🤖</span> AI 활용 여정 — "무턱대고 쓴 게 아니다"</h2>
+      <p class="ai-intro">
+        5개월간의 마이그레이션은 단순히 AI에게 코드를 시킨 결과가 아닙니다. 매주 AI 스터디 모임을 통해 체계적으로 학습하고, 실패에서 배우고, 도구를 직접 설계한 과정의 결과입니다.
+      </p>
+
+      <!-- 핵심 철학 -->
+      <div class="ai-subtitle">핵심 철학 — AI Harness</div>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <h4>"Sequential Thinking은 사람이 한다"</h4>
+          <p>AI가 발전해도 워크플로우 설계는 사람의 몫. 문제를 분해하고, 순서를 정하고, 검증 기준을 세우는 것은 사람의 역할이다.</p>
+        </div>
+        <div class="insight-card">
+          <h4>"Harness = AI에게 목발을 쥐어주기"</h4>
+          <p>CLAUDE.md, Skills, Memory로 AI의 실행 환경을 설계한다. 맥락을 제공하고, 제약을 걸고, 품질 기준을 정의하는 것이 핵심.</p>
+        </div>
+        <div class="insight-card">
+          <h4>"도구는 바뀌어도, 설계 능력은 남는다"</h4>
+          <p>Plugin에서 Agent로, Agent에서 Skill 구조로. 도구가 바뀌어도 설계 원칙과 구조 이해 능력은 그대로 이전된다.</p>
+        </div>
+      </div>
+
+      <!-- AI 활용 성장 타임라인 -->
+      <div class="ai-subtitle">AI 활용 성장 타임라인</div>
+      <div class="ai-timeline">
+        <div class="ai-timeline-item">
+          <div class="ai-timeline-date">2026.01 초</div>
+          <div class="ai-timeline-title">Phase 0 — AI 도구 탐색기</div>
+          <div class="ai-timeline-desc">Claude Code, Notion MCP, Firecrawl 등 다양한 AI 도구를 탐색하고 가능성을 실험</div>
+        </div>
+        <div class="ai-timeline-item">
+          <div class="ai-timeline-date">2026.01 말</div>
+          <div class="ai-timeline-title">Phase 1 — 생산성 체감</div>
+          <div class="ai-timeline-desc">Claude Code + Figma + PRD 조합으로 30분 만에 컴포넌트 완성. AI가 실무에 쓸 수 있다는 확신</div>
+        </div>
+        <div class="ai-timeline-item">
+          <div class="ai-timeline-date">2026.02 초</div>
+          <div class="ai-timeline-title">Phase 2 — 업무 패턴 전환</div>
+          <div class="ai-timeline-desc">omc(oh-my-claudecode) 도입. "낮에 설계 → 저녁 AI 실행 → 아침 검수" 사이클 확립</div>
+        </div>
+        <div class="ai-timeline-item">
+          <div class="ai-timeline-date">2026.02 중</div>
+          <div class="ai-timeline-title">Phase 3 — AI Harness 개념 정립</div>
+          <div class="ai-timeline-desc">"Sequential Thinking은 사람이 한다" 원칙 확립. AI를 도구로 쓰되, 설계와 검증은 사람이 담당</div>
+        </div>
+        <div class="ai-timeline-item">
+          <div class="ai-timeline-date">2026.02 말~03</div>
+          <div class="ai-timeline-title">Phase 4 — 체계적 AI 인프라 구축</div>
+          <div class="ai-timeline-desc">6개 이상 커스텀 Skill 구축, Memory 시스템 설계, 33개 전문 에이전트 체계 활용</div>
+        </div>
+      </div>
+
+      <!-- AI가 만든 것 vs 내가 만든 것 -->
+      <div class="ai-summary-callout">
+        <h4>"AI는 도구이고, 결정은 사람이 한다"</h4>
+        <ul class="ai-summary-list">
+          <li><span class="check">✓</span> <strong>아키텍처 설계 (FSD)</strong> — 사람이 설계</li>
+          <li><span class="check">✓</span> <strong>마이그레이션 전략</strong> — 사람이 결정</li>
+          <li><span class="check">✓</span> <strong>코드 품질 기준</strong> — 사람이 정의</li>
+          <li><span class="check">✓</span> <strong>비즈니스 로직</strong> — 사람이 검증</li>
+          <li><span class="partial">~</span> <strong>코드 생성</strong> — AI가 초안, 사람이 검수</li>
+          <li><span class="partial">~</span> <strong>리팩터링</strong> — AI가 실행, 사람이 방향</li>
+          <li><span class="partial">~</span> <strong>문서화</strong> — AI가 작성, 사람이 구조 제공</li>
+        </ul>
+      </div>
+
+      <!-- AI 활용 수치 -->
+      <div class="ai-subtitle">AI 활용 수치</div>
+      <div class="velocity-grid">
+        <div class="velocity-card">
+          <h4>AI 스터디 &amp; 인프라</h4>
+          <div class="velocity-stat">
+            <span class="velocity-label">매주 AI 스터디 미팅</span>
+            <span class="velocity-value" style="color: var(--primary-mid);">7회</span>
+          </div>
+          <div class="velocity-stat">
+            <span class="velocity-label">커스텀 Skill 구축</span>
+            <span class="velocity-value" style="color: var(--primary-mid);">6개+</span>
+          </div>
+          <div class="velocity-stat">
+            <span class="velocity-label">에이전트 활용</span>
+            <span class="velocity-value" style="color: var(--primary-mid);">33개 전문 에이전트</span>
+          </div>
+          <div class="velocity-stat">
+            <span class="velocity-label">업무 패턴</span>
+            <span class="velocity-value" style="color: var(--tertiary-dark);">설계→AI구현→검수</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 도메인별 마이그레이션 현황 (Placeholder) -->
+    <h2 class="section-title" id="section-domains"><span class="icon">🧩</span> 도메인별 마이그레이션 현황</h2>
+    <div class="pain-card" style="padding: 32px; text-align: center; margin-bottom: 48px;">
+      <div style="background: var(--primary-dim); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 16px;">
+        <div style="font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5;">🧩</div>
+        <div style="font-size: 1rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px;">도메인별 현황 업데이트 예정</div>
+        <div style="font-size: 0.85rem; color: var(--text-sub);">Flutter Legacy 의존성을 정확히 분석한 후, 실제 전환율 기반으로 업데이트합니다.</div>
+      </div>
+    </div>
+
+    <!-- 상세 비교 테이블 -->
+    <section id="section-techstack" class="comparison-section">
+      <h2 class="section-title"><span class="icon">⚖️</span> 기술 스택 상세 비교</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>Flutter Web (Before)</th>
+            <th>Next.js (After)</th>
+            <th>판정</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SEO</strong></td>
+            <td style="color: var(--highlight);">불가 (Canvas 렌더링)</td>
+            <td style="color: var(--tertiary-dark);">SSR + generateMetadata + sitemap.xml</td>
+            <td><span class="badge badge-better">대폭 개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>초기 로딩</strong></td>
+            <td style="color: var(--highlight);">Dart→JS 컴파일 번들 (수 MB)</td>
+            <td style="color: var(--tertiary-dark);">코드 스플리팅 + SSR (수백 KB)</td>
+            <td><span class="badge badge-better">대폭 개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>에러 모니터링</strong></td>
+            <td style="color: var(--highlight-low);">기본 로깅</td>
+            <td style="color: var(--tertiary-dark);">Sentry (환경별 분리, source maps)</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>상태 관리</strong></td>
+            <td>Provider / GetX</td>
+            <td>Zustand + React Query (서버/클라이언트 분리)</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>코드량</strong></td>
+            <td>56,347줄 (420 파일)</td>
+            <td>35,743줄 (438 파일) — 37% 감소</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>아키텍처</strong></td>
+            <td>레이어 기반 (명확하지 않음)</td>
+            <td>FSD (Feature-Sliced Design) 체계적</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>인증</strong></td>
+            <td>자체 구현 (복잡한 iframe 통신)</td>
+            <td>카카오/구글 OAuth + Next.js Route Handler</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>지도</strong></td>
+            <td>Flutter Map 위젯 (제한적)</td>
+            <td>네이버맵 JS SDK 직접 통합 (클러스터링, 폴리곤)</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>디자인 시스템</strong></td>
+            <td>자체 위젯 (일관성 부족)</td>
+            <td>Radix + Tailwind + 디자인 토큰</td>
+            <td><span class="badge badge-better">개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>배포</strong></td>
+            <td>Amplify</td>
+            <td>Amplify (동일)</td>
+            <td><span class="badge badge-same">동일</span></td>
+          </tr>
+          <tr>
+            <td><strong>백엔드 API</strong></td>
+            <td>NestJS (동일)</td>
+            <td>NestJS (동일)</td>
+            <td><span class="badge badge-same">동일</span></td>
+          </tr>
+          <tr>
+            <td><strong>npm 생태계</strong></td>
+            <td style="color: var(--highlight);">사용 불가</td>
+            <td style="color: var(--tertiary-dark);">풀 액세스</td>
+            <td><span class="badge badge-better">대폭 개선</span></td>
+          </tr>
+          <tr>
+            <td><strong>Feature Flag</strong></td>
+            <td style="color: var(--highlight);">없음</td>
+            <td style="color: var(--tertiary-dark);">환경변수 기반 점진적 배포</td>
+            <td><span class="badge badge-better">신규</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- RESULT Big Section Header -->
+    <div id="section-result" class="big-section-header">
+      <h2 class="section-title"><span class="icon">📈</span> 결과는 어떤가?</h2>
+      <p>코드량 37% 감소, 개발 속도 14% 향상, SEO 완전 지원</p>
+    </div>
 
     <!-- 핵심 수치 비교 -->
     <h2 class="section-title"><span class="icon">📊</span> 핵심 수치 비교</h2>
@@ -563,9 +1424,9 @@
     </div>
 
     <!-- 월별 커밋 차트 -->
-    <section class="chart-section">
+    <section id="section-monthly" class="chart-section">
       <h2 class="section-title"><span class="icon">📈</span> 월별 개발 속도 비교</h2>
-      <p style="color:#6b7280; margin-bottom:20px; font-size:0.9rem;">Flutter Legacy의 주요 활동 기간 vs Next.js 전체 기간</p>
+      <p style="color: var(--text-sub); margin-bottom: 20px; font-size: 0.9rem;">Flutter Legacy의 주요 활동 기간 vs Next.js 전체 기간</p>
 
       <div class="bar-chart">
         <div class="bar-row">
@@ -631,7 +1492,7 @@
     </section>
 
     <!-- 개발 속도 상세 -->
-    <h2 class="section-title"><span class="icon">⚡</span> 개발 속도 분석</h2>
+    <h2 class="section-title" id="section-velocity"><span class="icon">⚡</span> 개발 속도 분석</h2>
     <div class="velocity-grid">
       <div class="velocity-card">
         <h4>Flutter Web Legacy</h4>
@@ -681,220 +1542,85 @@
       </div>
     </div>
 
-    <!-- 상세 비교 테이블 -->
-    <section class="comparison-section">
-      <h2 class="section-title"><span class="icon">⚖️</span> 기술 스택 상세 비교</h2>
-      <table class="comparison-table">
-        <thead>
-          <tr>
-            <th>항목</th>
-            <th>Flutter Web (Before)</th>
-            <th>Next.js (After)</th>
-            <th>판정</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>SEO</strong></td>
-            <td style="color:#ef4444">불가 (Canvas 렌더링)</td>
-            <td style="color:#34d399">SSR + generateMetadata + sitemap.xml</td>
-            <td><span class="badge badge-better">대폭 개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>초기 로딩</strong></td>
-            <td style="color:#ef4444">Dart→JS 컴파일 번들 (수 MB)</td>
-            <td style="color:#34d399">코드 스플리팅 + SSR (수백 KB)</td>
-            <td><span class="badge badge-better">대폭 개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>에러 모니터링</strong></td>
-            <td style="color:#fbbf24">기본 로깅</td>
-            <td style="color:#34d399">Sentry (환경별 분리, source maps)</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>상태 관리</strong></td>
-            <td>Provider / GetX</td>
-            <td>Zustand + React Query (서버/클라이언트 분리)</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>코드량</strong></td>
-            <td>56,347줄 (420 파일)</td>
-            <td>35,743줄 (438 파일) — 37% 감소</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>아키텍처</strong></td>
-            <td>레이어 기반 (명확하지 않음)</td>
-            <td>FSD (Feature-Sliced Design) 체계적</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>인증</strong></td>
-            <td>자체 구현 (복잡한 iframe 통신)</td>
-            <td>카카오/구글 OAuth + Next.js Route Handler</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>지도</strong></td>
-            <td>Flutter Map 위젯 (제한적)</td>
-            <td>네이버맵 JS SDK 직접 통합 (클러스터링, 폴리곤)</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>디자인 시스템</strong></td>
-            <td>자체 위젯 (일관성 부족)</td>
-            <td>Radix + Tailwind + 디자인 토큰</td>
-            <td><span class="badge badge-better">개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>배포</strong></td>
-            <td>Amplify</td>
-            <td>Amplify (동일)</td>
-            <td><span class="badge badge-same">동일</span></td>
-          </tr>
-          <tr>
-            <td><strong>백엔드 API</strong></td>
-            <td>NestJS (동일)</td>
-            <td>NestJS (동일)</td>
-            <td><span class="badge badge-same">동일</span></td>
-          </tr>
-          <tr>
-            <td><strong>npm 생태계</strong></td>
-            <td style="color:#ef4444">사용 불가</td>
-            <td style="color:#34d399">풀 액세스</td>
-            <td><span class="badge badge-better">대폭 개선</span></td>
-          </tr>
-          <tr>
-            <td><strong>Feature Flag</strong></td>
-            <td style="color:#ef4444">없음</td>
-            <td style="color:#34d399">환경변수 기반 점진적 배포</td>
-            <td><span class="badge badge-better">신규</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- 마이그레이션 완주 로드맵 -->
+    <section id="section-completion" class="completion-section">
+      <h2 class="section-title"><span class="icon">🏁</span> 마이그레이션 완주 로드맵</h2>
+      <p style="color: var(--text-sub); margin-bottom: 24px; font-size: 0.9rem;">마이그레이션의 완료 기준은 명확합니다: Flutter-web-legacy 의존성 0%.</p>
+
+      <!-- Exit Criteria -->
+      <div class="exit-criteria">
+        <h4>Exit Criteria</h4>
+        <ul class="exit-list">
+          <li><span class="done">✓</span> SSR + SEO 인프라 구축 완료</li>
+          <li><span class="done">✓</span> 인증 시스템 독립</li>
+          <li><span class="done">✓</span> 에러 모니터링 독립 (Sentry)</li>
+          <li><span class="done">✓</span> FSD 아키텍처 정립 (위반 0건)</li>
+          <li><span class="pending">○</span> 잔여 도메인 전환</li>
+          <li><span class="pending">○</span> Flutter iframe 완전 제거</li>
+          <li><span class="pending">○</span> opndoctor-web-legacy 레포 아카이브</li>
+        </ul>
+      </div>
+
+      <!-- 남은 마일스톤 -->
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 16px;">남은 마일스톤</h3>
+      <div class="timeline" style="margin-bottom: 32px;">
+        <div class="timeline-item">
+          <div class="timeline-date">2026.03~04 초</div>
+          <div class="timeline-title">입지분석 도메인 완전 전환</div>
+          <div class="timeline-desc">잔여 입지분석 기능 마이그레이션 완료 및 Flutter 의존성 제거</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026.04</div>
+          <div class="timeline-title">검색 도메인 전환 + iframe 제거</div>
+          <div class="timeline-desc">검색 도메인 Next.js 전환 및 Flutter iframe 완전 제거</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026.04 말</div>
+          <div class="timeline-title">레거시 Sunset &amp; 검증</div>
+          <div class="timeline-desc">opndoctor-web-legacy 레포 아카이브, 전체 회귀 테스트 및 성능 검증</div>
+        </div>
+      </div>
+
+      <!-- 추후 추가 예정 데이터 -->
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 16px;">추후 추가 예정 데이터</h3>
+      <div class="placeholder-grid">
+        <div class="pain-card" style="padding: 20px;">
+          <div style="background: var(--primary-dim); border: 2px dashed var(--border); border-radius: 12px; padding: 32px 16px; text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5;">📈</div>
+            <div style="font-size: 0.82rem; color: var(--neutral-200); font-weight: 600;">Coming Soon</div>
+          </div>
+          <h4 style="color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">Lighthouse Before/After</h4>
+          <p style="color: var(--text-sub); font-size: 0.82rem;">Next.js 전환 후 Lighthouse 점수 비교</p>
+        </div>
+        <div class="pain-card" style="padding: 20px;">
+          <div style="background: var(--primary-dim); border: 2px dashed var(--border); border-radius: 12px; padding: 32px 16px; text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5;">🔍</div>
+            <div style="font-size: 0.82rem; color: var(--neutral-200); font-weight: 600;">Coming Soon</div>
+          </div>
+          <h4 style="color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">SEO 실제 성과</h4>
+          <p style="color: var(--text-sub); font-size: 0.82rem;">구글 인덱싱, 오가닉 트래픽 변화 추적</p>
+        </div>
+        <div class="pain-card" style="padding: 20px;">
+          <div style="background: var(--primary-dim); border: 2px dashed var(--border); border-radius: 12px; padding: 32px 16px; text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5;">🖼️</div>
+            <div style="font-size: 0.82rem; color: var(--neutral-200); font-weight: 600;">Coming Soon</div>
+          </div>
+          <h4 style="color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">Before/After 스크린샷</h4>
+          <p style="color: var(--text-sub); font-size: 0.82rem;">Flutter vs Next.js UI 비교 스크린샷</p>
+        </div>
+        <div class="pain-card" style="padding: 20px;">
+          <div style="background: var(--primary-dim); border: 2px dashed var(--border); border-radius: 12px; padding: 32px 16px; text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5;">🔄</div>
+            <div style="font-size: 0.82rem; color: var(--neutral-200); font-weight: 600;">Coming Soon</div>
+          </div>
+          <h4 style="color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">iframe 제거 아키텍처</h4>
+          <p style="color: var(--text-sub); font-size: 0.82rem;">Flutter iframe 의존성 제거 과정 상세</p>
+        </div>
+      </div>
     </section>
 
-    <!-- 마이그레이션 타임라인 -->
-    <h2 class="section-title"><span class="icon">🛤️</span> 마이그레이션 타임라인</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-date">2025.10</div>
-        <div class="timeline-title">Phase 1 — 프로젝트 기반 구축</div>
-        <div class="timeline-desc">
-          Next.js 15 + Tailwind 4 초기 세팅 / iframe 통신 구조 확립 / Flutter Web을 iframe으로 임베드<br>
-          SEO 기반 작업 (메타데이터, OG Image)
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">2025.11</div>
-        <div class="timeline-title">Phase 2 — 핵심 도메인 마이그레이션 (폭발적 성장)</div>
-        <div class="timeline-desc">
-          74 커밋 (최대 활동) / 의원 검색·목록 / 모달 시스템 (Radix) / 디자인 시스템 구축<br>
-          의원 상세 페이지 / 결제 플로우 / iframe 양방향 통신 안정화
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">2025.12</div>
-        <div class="timeline-title">Phase 3 — 매물·리포트 마이그레이션</div>
-        <div class="timeline-desc">
-          매물 상세 사이드뷰 / 매물 QA 완료 / 리포트 목록·상세·결제 / 로그인 리다이렉트
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">2026.01</div>
-        <div class="timeline-title">Phase 4 — 인증·분석 강화</div>
-        <div class="timeline-desc">
-          입지 상담 Form 마이그레이션 / Amplitude 이벤트 추적 / 회원가입 Flutter→Next 위임<br>
-          리포트 상세 결제·라우팅 통합
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">2026.02</div>
-        <div class="timeline-title">Phase 5 — 고급 분석 기능</div>
-        <div class="timeline-desc">
-          반경분석·다각형분석 핵심 기능 / 비회원 접근 제어 UI / 인증 토큰 인메모리 전환
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-date">2026.03 (현재)</div>
-        <div class="timeline-title">Phase 6 — 입지분석 + 인프라 완성</div>
-        <div class="timeline-desc">
-          입지분석 전체 구현 (차트, 의원목록, 비회원 UI) / Sentry 에러 모니터링 시스템<br>
-          FSD 아키텍처 위반 전면 수정 (50건 → 0건) / iframe 통신 추상화 / 마이페이지<br>
-          빌딩 마커 polygon / NaverMap 성능 최적화 / 에러 클래스 세분화
-        </div>
-      </div>
-    </div>
-
-    <!-- 도메인별 마이그레이션 현황 -->
-    <h2 class="section-title"><span class="icon">🧩</span> 도메인별 마이그레이션 현황</h2>
-    <div class="domain-grid">
-      <div class="domain-card">
-        <div class="name">auth (인증)</div>
-        <div class="files">43 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">map (지도)</div>
-        <div class="files">34 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">consult-register</div>
-        <div class="files">29 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">mypage</div>
-        <div class="files">19 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">conslutation</div>
-        <div class="files">7 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">property (매물)</div>
-        <div class="files">6 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">report</div>
-        <div class="files">5 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">bookmark</div>
-        <div class="files">5 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">hospital</div>
-        <div class="files">4 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">analysis (입지)</div>
-        <div class="files">4 files</div>
-        <div class="status status-wip">진행중</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">payment</div>
-        <div class="files">4 files</div>
-        <div class="status status-done">완료</div>
-      </div>
-      <div class="domain-card">
-        <div class="name">search</div>
-        <div class="files">1 file</div>
-        <div class="status status-wip">진행중</div>
-      </div>
-    </div>
-
     <!-- 결론 -->
-    <section class="summary-callout">
+    <section id="section-summary" class="summary-callout">
       <h3>마이그레이션 성과 요약</h3>
       <ul class="summary-list">
         <li><span class="check">✓</span> <strong>SEO 0점 → 완전 지원:</strong> SSR, 메타데이터, sitemap, robots.txt — 구글 인덱싱 가능</li>
@@ -913,8 +1639,49 @@
 
   <footer class="footer">
     <p>Generated on 2026-03-13 | OpenDoctor Migration History Dashboard</p>
-    <p style="margin-top:4px">Data source: git log analysis of opndoctor-web, opndoctor-web-legacy, opndoctor-web-react</p>
+    <p style="margin-top: 4px;">Data source: git log analysis of opndoctor-web, opndoctor-web-legacy, opndoctor-web-react</p>
   </footer>
+
+  <script>
+  (function () {
+    var animated = false;
+    function runAnimations() {
+      if (animated) return;
+      animated = true;
+      document.querySelectorAll('.lh-score-fill').forEach(function (el, i) {
+        setTimeout(function () {
+          el.style.width = el.getAttribute('data-width') + '%';
+        }, i * 100);
+      });
+      var bars = [
+        { id: 'res-font', pct: 33.5 },
+        { id: 'res-dart', pct: 16.3 },
+        { id: 'res-api',  pct: 5.8  },
+        { id: 'res-turf', pct: 1.7  },
+        { id: 'res-etc',  pct: 1.3  },
+        { id: 'res-rest', pct: 52.5 },
+      ];
+      bars.forEach(function (b, i) {
+        var el = document.getElementById(b.id);
+        if (!el) return;
+        setTimeout(function () {
+          el.style.width = b.pct + '%';
+        }, 200 + i * 100);
+      });
+    }
+    var target = document.getElementById('lh-scores');
+    if (target && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { runAnimations(); observer.disconnect(); }
+        });
+      }, { threshold: 0.2 });
+      observer.observe(target);
+    } else {
+      setTimeout(runAnimations, 500);
+    }
+  })();
+  </script>
 
 </body>
 </html>
